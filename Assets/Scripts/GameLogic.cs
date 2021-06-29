@@ -7,48 +7,81 @@ public class DefenderData
 {
     public int ammunition;
     public int health;
-    public Vector2 position;
-    public GameObject defender;
 }
 [System.Serializable]
 public class BuildingData
 {
     public int health;
-    public Vector2 position;
-    public GameObject building;
 }
 [System.Serializable]
 public class MissileData
 {
     public int damage;
     public float speed;
-    public Vector2 position;
-    public Vector2 spawn;
-    public Vector2 target;
+}
+[System.Serializable]
+public class LevelData
+{
+    public float waveTimer;
+    public int missilesAmount;
+}
+[System.Serializable]
+public class difficultyData
+{
+    public string difficulty;
+    public float missileSpeedModifier;
+    public float waveFrequency;
+}
+[System.Serializable]
+public class JsonData
+{
+    public LevelData[] levels;
+    public difficultyData[] difficulties;
 }
 
 
 public class GameLogic : MonoBehaviour
 {
-    public List<DefenderData> defenderList = new List<DefenderData>();
-    public List<BuildingData> buildingList = new List<BuildingData>();
-    public MissileData missile = new MissileData();
+    private List<Defender> defenderList;
+    private List<Building> buildingList;
+    // private List<Missile> missileList;
 
+    GameObject missile = new GameObject();
+    LevelData currLevel = new LevelData();
+    public float timer;
+
+    void Awake()
+    {
+        buildingList = new List<Building>(transform.GetComponentsInChildren<Building>());
+        defenderList = new List<Defender>(transform.GetComponentsInChildren<Defender>());
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         
-        
-        missile.speed = 5f;
-        missile.spawn = new Vector2(2,2);
-        Instantiate((GameObject)Resources.Load("/Prefabs/Missile", typeof(GameObject)), missile.spawn, Quaternion.identity);
-        
+        //LevelData currLevel = new LevelData();
+        //Default value - to be changed later in JSON
+        currLevel.waveTimer = 5f;
+        Debug.LogWarning(currLevel.waveTimer);
+        timer = currLevel.waveTimer;
+        //Debug.LogWarning(timer);
+
+
+        missile = Instantiate((GameObject)Resources.Load("Prefabs/Missile", typeof(GameObject)), new Vector3(Random.Range(-9,9), 11f, 0f), Quaternion.identity);
+        missile.GetComponent<Missile>().Init(3f, Vector3.zero, 20);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        timer -= Time.deltaTime;
+        //Debug.LogWarning(timer);
+        if (timer <= 0)
+        {
+            timer = currLevel.waveTimer;
+            missile = Instantiate((GameObject)Resources.Load("Prefabs/Missile", typeof(GameObject)), new Vector3(Random.Range(-9,9), 11f, 0f), Quaternion.identity);
+            missile.GetComponent<Missile>().Init(3f, Vector3.zero, 20);
+        }
     }
 }
