@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Defender : MonoBehaviour
 {
+    private Transform missileTarget;
+
     void Awake()
     {
-        
+        missileTarget = transform.Find("MissileTarget");        
     }
+
 
     // Start is called before the first frame update
     void Start()
@@ -15,9 +18,16 @@ public class Defender : MonoBehaviour
         
     }
 
+    public Vector3 GetMissileTarget()
+    {
+        return missileTarget.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
         
     }
+
+    
 }
