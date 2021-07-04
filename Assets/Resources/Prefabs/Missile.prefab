@@ -9700,8 +9700,8 @@ GameObject:
   m_Component:
   - component: {fileID: 885987938082476430}
   - component: {fileID: 2523476254207119198}
-  - component: {fileID: 4515254076727488005}
   - component: {fileID: 110293178650466048}
+  - component: {fileID: 7789610658998623421}
   m_Layer: 0
   m_Name: Missile
   m_TagString: Untagged
@@ -9738,32 +9738,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b358f0c32f591b4683da0074d39d785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &4515254076727488005
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 885987938082476429}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.2}
-  m_EdgeRadius: 0
+  spriteRenderer: {fileID: 1637201338407693619}
+  spriteArray:
+  - {fileID: 21300000, guid: 599062ecf7580df4fa23ea4b4c2f61ab, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!50 &110293178650466048
 Rigidbody2D:
   serializedVersion: 4
@@ -9785,3 +9765,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &7789610658998623421
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885987938082476429}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0077094, y: -0.0013873719}
+  m_Size: {x: 0.40759835, y: 0.1617359}
+  m_Direction: 1

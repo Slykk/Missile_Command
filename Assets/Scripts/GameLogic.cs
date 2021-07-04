@@ -127,6 +127,6 @@ public class GameLogic : MonoBehaviour
         // Missile creation
         missile = Instantiate((GameObject)Resources.Load("Prefabs/Missile", typeof(GameObject)), new Vector3(Random.Range(-9,9), 11f, 0f), Quaternion.identity);
         missile.transform.SetParent(missilesParent.transform);
-        missile.GetComponent<Missile>().Init(3f, missileTarget, 20);
+        missile.GetComponent<Missile>().Init(2f, missileTarget, 20);
     }
 }

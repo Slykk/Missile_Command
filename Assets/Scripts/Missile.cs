@@ -10,6 +10,9 @@ public class Missile : MonoBehaviour
     int damage;
     float step;
 
+    public SpriteRenderer spriteRenderer;
+    public Sprite[] spriteArray;
+
     public void Init(float speed, Vector3 target, int damage)
     {
         this.speed = speed;
@@ -28,7 +31,7 @@ public class Missile : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.eulerAngles = Vector3.forward*angle;
 
-        // smoke = Resources.Load("Images/Smoke", typeof(GameObject));
+        spriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
 
 
     }
@@ -38,8 +41,6 @@ public class Missile : MonoBehaviour
     {
         step =  speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, this.target, step);
-
-        
         
     }
     
@@ -48,9 +49,11 @@ public class Missile : MonoBehaviour
         Transform collider = collision.gameObject.transform;
         if (collision.gameObject.name == "Sprite")
         {
-            Instantiate((GameObject)Resources.Load("Prefabs/Smoke", typeof(GameObject)), collider.position, Quaternion.identity);
+            collision.gameObject.GetComponent<SpriteRenderer>().sprite = spriteArray[0];
+            Destroy(this.gameObject);
+
             Instantiate((GameObject)Resources.Load("Prefabs/BuildingExplosion", typeof(GameObject)), collider.position, Quaternion.identity);
-            Destroy(collision.gameObject); // destroy only for testing
+            //Destroy(collision.gameObject); // destroy only for testing
             //Shake screen, change sprite, etc
         }
     }
