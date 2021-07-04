@@ -49,6 +49,7 @@ public class Missile : MonoBehaviour
         if (collision.gameObject.name == "Sprite")
         {
             Instantiate((GameObject)Resources.Load("Prefabs/Smoke", typeof(GameObject)), collider.position, Quaternion.identity);
+            Instantiate((GameObject)Resources.Load("Prefabs/BuildingExplosion", typeof(GameObject)), collider.position, Quaternion.identity);
             Destroy(collision.gameObject); // destroy only for testing
             //Shake screen, change sprite, etc
         }
