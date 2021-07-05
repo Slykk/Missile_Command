@@ -2,30 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building : MonoBehaviour
+public class Building : Structure
 {
-    private Transform missileTarget;
+    private SpriteRenderer spriteRenderer;
+    private string spriteName;
 
-    void Awake()
+    protected override void Awake()
     {
-        missileTarget = transform.Find("MissileTarget");
+        base.Awake();
+        spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        spriteName = spriteRenderer.sprite.name;
     }
 
-
-    // Start is called before the first frame update
-    void Start()
+    public override void Hit(int damage)
     {
-        
+        base.Hit(damage);
     }
 
-    public Vector3 GetMissileTarget()
+    public override void Kill()
     {
-        return missileTarget.position;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.Kill();
+        spriteRenderer.sprite = (Sprite)Resources.Load("Images/" + spriteName + "_Destroyed", typeof(Sprite));
     }
 }

@@ -110,23 +110,32 @@ public class GameLogic : MonoBehaviour
 
     void CreateMissile()
     {
-        // Assign target randomly
-        random = Random.Range(0, targetType.Count);
-        Debug.LogWarning("There are: " + missilesLeft);
-        if (targetType[random] == "Building")
+        // def : 3, bld : 4
+        int defChance = 3;
+        int buildingChance = 2;
+
+        List<Vector3> targets = new List<Vector3>();
+        foreach (var item in buildingList)
         {
-            random = Random.Range(0, buildingList.Count);
-            missileTarget = buildingList[random].GetMissileTarget();
+            if (!item.IsAlive())
+                continue;
+            for (int i = 0; i < buildingChance; i++)
+                targets.Add(item.GetMissileTarget());
         }
-        else if (targetType[random] == "Defender")
+
+        foreach (var item in defenderList)
         {
-            random = Random.Range(0, defenderList.Count);
-            missileTarget = defenderList[random].GetMissileTarget();
+            if (!item.IsAlive())
+                continue;
+            for (int i = 0; i < defChance; i++)
+                targets.Add(item.GetMissileTarget());
         }
+
+        Vector3 target = targets[Random.Range(0, targets.Count)];
 
         // Missile creation
         missile = Instantiate((GameObject)Resources.Load("Prefabs/Missile", typeof(GameObject)), new Vector3(Random.Range(-9,9), 11f, 0f), Quaternion.identity);
         missile.transform.SetParent(missilesParent.transform);
-        missile.GetComponent<Missile>().Init(2f, missileTarget, 20);
+        missile.GetComponent<Missile>().Init(2f, target, 20);
     }
 }

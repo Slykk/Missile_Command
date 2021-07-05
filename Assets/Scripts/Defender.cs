@@ -2,32 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Defender : MonoBehaviour
+public class Defender : Structure
 {
-    private Transform missileTarget;
-
-    void Awake()
-    {
-        missileTarget = transform.Find("MissileTarget");        
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    public Vector3 GetMissileTarget()
-    {
-        return missileTarget.position;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    private SpriteRenderer spriteRenderer;
+    private string spriteName;
     
+    protected override void Awake()
+    {
+        base.Awake();
+        spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        spriteName = spriteRenderer.sprite.name;
+    }
+
+    public override void Hit(int damage)
+    {
+        base.Hit(damage);
+    }
+
+    public override void Kill()
+    {
+        base.Kill();
+        spriteRenderer.sprite = (Sprite)Resources.Load("Images/" + spriteName + "_Destroyed", typeof(Sprite));
+    }
 }

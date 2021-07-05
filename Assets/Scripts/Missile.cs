@@ -46,15 +46,16 @@ public class Missile : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Transform collider = collision.gameObject.transform;
-        if (collision.gameObject.name == "Sprite")
-        {
-            collision.gameObject.GetComponent<SpriteRenderer>().sprite = spriteArray[0];
-            Destroy(this.gameObject);
+        Structure target = collision.transform.parent.GetComponent<Structure>();
+        if (target == null)
+            return;
 
-            Instantiate((GameObject)Resources.Load("Prefabs/BuildingExplosion", typeof(GameObject)), collider.position, Quaternion.identity);
-            //Destroy(collision.gameObject); // destroy only for testing
-            //Shake screen, change sprite, etc
-        }
+        target.Hit(this.damage);
+
+        Transform collider = collision.gameObject.transform;
+        Destroy(this.gameObject);
+        Instantiate((GameObject)Resources.Load("Prefabs/BuildingExplosion", typeof(GameObject)), collider.position - new Vector3(0, 0.5f, 0), Quaternion.identity);
+        Instantiate((GameObject)Resources.Load("Prefabs/BuildingExplosionSplatter", typeof(GameObject)), collider.position, Quaternion.identity);
+        //Shake screen, change sprite, etc
     }
 }
