@@ -6,12 +6,46 @@ public class Defender : Structure
 {
     private SpriteRenderer spriteRenderer;
     private string spriteName;
+    public int ammo;
+    public string state;
+    public bool operational;
+    public bool reloading;
+    private float timer;
+    private float reloadTime;
+
     
     protected override void Awake()
     {
         base.Awake();
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         spriteName = spriteRenderer.sprite.name;
+
+
+        operational = true;
+        reloading = false;
+
+        reloadTime = 2f;
+        timer = reloadTime;
+        ammo = 10;
+    }
+
+    void Update()
+    {
+        if (reloading)
+        {
+            operational = false;
+            timer -= reloadTime * Time.deltaTime;
+            if (timer <= 0)
+            {
+                timer = reloadTime;
+                reloading = false;
+                operational = true;
+            }
+        }
+        if (ammo <= 0 && operational)
+        {
+            operational = false;
+        }
     }
 
     public override void Hit(int damage)

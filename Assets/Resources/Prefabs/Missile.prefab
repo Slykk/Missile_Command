@@ -5546,7 +5546,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 10
+    angle: 0
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -5689,7 +5689,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
     arc:
-      value: 60
+      value: 0
       mode: 0
       spread: 0
       speed:
@@ -9673,7 +9673,7 @@ ParticleSystemRenderer:
   m_VelocityScale: 0
   m_LengthScale: 1
   m_SortingFudge: 0
-  m_NormalDirection: 1
+  m_NormalDirection: 0
   m_ShadowBias: 0
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
@@ -9704,7 +9704,7 @@ GameObject:
   - component: {fileID: 7789610658998623421}
   m_Layer: 0
   m_Name: Missile
-  m_TagString: Untagged
+  m_TagString: Missile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9738,12 +9738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b358f0c32f591b4683da0074d39d785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 1637201338407693619}
-  spriteArray:
-  - {fileID: 21300000, guid: 599062ecf7580df4fa23ea4b4c2f61ab, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!50 &110293178650466048
 Rigidbody2D:
   serializedVersion: 4

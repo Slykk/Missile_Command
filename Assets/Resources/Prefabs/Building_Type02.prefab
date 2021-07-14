@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4eac3f5d8a46b4798f782830c991cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
 --- !u!1 &4867523989514372565
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,13 +175,15 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.66094285, y: -0.10813096}
+  - {x: -0.65811497, y: -0.08833656}
   - {x: -0.66043353, y: -0.5258353}
   - {x: 0.594496, y: -0.5167538}
   - {x: 0.65962124, y: 0.21412033}
   - {x: 0.42593217, y: 0.5176251}
   - {x: -0.25419402, y: 0.5100036}
-  - {x: -0.65722865, y: -0.11233041}
+  - {x: -0.4904437, y: 0.22155535}
+  - {x: -0.44628024, y: -0.09743637}
+  - {x: -0.65722865, y: -0.092536}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0

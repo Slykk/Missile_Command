@@ -5,20 +5,18 @@ using UnityEngine;
 public class Missile : MonoBehaviour
 {
     // Missile data
-    float speed;
-    Vector3 target;
-    int damage;
-    float step;
+    private float speed;
+    private Vector3 target;
+    private int damage;
+    private float step;
 
-    public SpriteRenderer spriteRenderer;
-    public Sprite[] spriteArray;
+    private SpriteRenderer spriteRenderer;
 
     public void Init(float speed, Vector3 target, int damage)
     {
         this.speed = speed;
         this.target = target;
         this.damage = damage;
-        //transform.SetParent(GameObject.Find("Missiles").transform);
     }
 
 
@@ -54,8 +52,8 @@ public class Missile : MonoBehaviour
 
         Transform collider = collision.gameObject.transform;
         Destroy(this.gameObject);
-        Instantiate((GameObject)Resources.Load("Prefabs/BuildingExplosion", typeof(GameObject)), collider.position - new Vector3(0, 0.5f, 0), Quaternion.identity);
-        Instantiate((GameObject)Resources.Load("Prefabs/BuildingExplosionSplatter", typeof(GameObject)), collider.position, Quaternion.identity);
+        Instantiate((GameObject)Resources.Load("Prefabs/Explosion", typeof(GameObject)), transform.position, Quaternion.identity);
+        //Instantiate((GameObject)Resources.Load("Prefabs/BuildingExplosionSplatter", typeof(GameObject)), collider.position, Quaternion.identity);
         //Shake screen, change sprite, etc
     }
 }
