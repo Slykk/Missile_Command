@@ -34,6 +34,21 @@ public class GameData
     {
         return jsonData.difficulty[difficultyInex];
     }
+
+    public int LevelsCount()
+    {
+        return jsonData.levels.Length;
+    }
+
+    public void SetCurrentLevel(int levelIndex)
+    {
+        currLevel = jsonData.levels[levelIndex];
+    }
+
+    public LevelData GetCurrentLevel()
+    {
+        return currLevel;
+    }
     
 
 }

@@ -59,7 +59,7 @@
     "difficulty": [
         {
             "difficulty": "easy",
-            "missileSpeedModifier": 0.5,
+            "missileSpeedModifier": 0.8,
             "waveFrequencyModifier": 1.2
         },
         {
@@ -69,7 +69,7 @@
         },
         {
             "difficulty": "hard",
-            "missileSpeedModifier": 1.5,
+            "missileSpeedModifier": 1.2,
             "waveFrequencyModifier": 0.8
         }
     ]

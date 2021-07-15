@@ -20,7 +20,6 @@ public class Missile : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
     void Start()
     {
         // Direction calculations
@@ -34,7 +33,6 @@ public class Missile : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         step =  speed * Time.deltaTime;
@@ -53,7 +51,6 @@ public class Missile : MonoBehaviour
         Transform collider = collision.gameObject.transform;
         Destroy(this.gameObject);
         Instantiate((GameObject)Resources.Load("Prefabs/Explosion", typeof(GameObject)), transform.position, Quaternion.identity);
-        //Instantiate((GameObject)Resources.Load("Prefabs/BuildingExplosionSplatter", typeof(GameObject)), collider.position, Quaternion.identity);
         //Shake screen, change sprite, etc
     }
 }

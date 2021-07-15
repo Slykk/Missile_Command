@@ -3,45 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-[System.Serializable]
-public class DefenderData
-{
-    public int ammunition;
-    public float reloadTime;
-    public int health;
-}
-[System.Serializable]
-public class BuildingData
-{
-    public int health;
-}
-[System.Serializable]
-public class MissileData
-{
-    public int damage;
-    public float speed;
-}
-[System.Serializable]
-public class LevelData
-{
-    public string layoutName;
-    public float waveTimer;
-    public int missilesAmount;
-}
-[System.Serializable]
-public class DifficultyData
-{
-    public string difficulty;
-    public float missileSpeedModifier;
-    public float waveFrequencyModifier;
-}
-[System.Serializable]
-public class JsonData
-{
-    public LevelData[] levels;
-    public DifficultyData[] difficulties;
-}
-
 
 public class GameLogic : MonoBehaviour
 {
@@ -64,31 +25,24 @@ public class GameLogic : MonoBehaviour
     {
         buildingList = new List<Building>(transform.GetComponentsInChildren<Building>());
         defenderList = new List<Defender>(transform.GetComponentsInChildren<Defender>());
-        
-        targetType = new List<string>();
-        targetType.Add("Building");
-        targetType.Add("Defender");
 
         currLevel = new LevelData();
-        
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         //Default value - to be changed later in JSON
         currLevel.waveTimer = 2f;
         currLevel.missilesAmount = 10;
 
-        Debug.LogWarning(currLevel.waveTimer);
+
         timer = currLevel.waveTimer;
         missilesLeft = currLevel.missilesAmount;
 
-        //Debug.LogWarning(timer);
-        
+        currLevel = GameData.GetInstance().GetCurrentLevel();
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         timer -= Time.deltaTime;

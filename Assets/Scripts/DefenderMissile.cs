@@ -20,7 +20,6 @@ public class DefenderMissile : MonoBehaviour
         this.blastSpeed = blastSpeed;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         // Direction calculations
@@ -30,7 +29,6 @@ public class DefenderMissile : MonoBehaviour
         transform.eulerAngles = Vector3.forward*angle;
     }
 
-    // Update is called once per frame
     void Update()
     {
         step =  speed * Time.deltaTime;
@@ -61,7 +59,7 @@ public class DefenderMissile : MonoBehaviour
         Instantiate((GameObject)Resources.Load("Prefabs/Explosion", typeof(GameObject)), transform.position, Quaternion.identity);
         Destroy(collider.gameObject);
         Destroy(this.gameObject);
-        var number = Instantiate((GameObject)Resources.Load("Prefabs/Number"), transform.position, Quaternion.identity);
-        number.GetComponent<ScorePopup>().Init("8", Vector3.right*2);
+        // var number = Instantiate((GameObject)Resources.Load("Prefabs/Number"), transform.position, Quaternion.identity);
+        // number.GetComponent<ScorePopup>().Init("8", Vector3.right*2);
     }
 }
