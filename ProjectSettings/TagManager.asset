@@ -9,6 +9,7 @@ TagManager:
   - Missile
   - EnemyShip
   - FxTemporaire
+  - Layout
   layers:
   - Default
   - TransparentFX

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
+    private GameObject gameLogic;
+
     // Missile data
     private float speed;
     private Vector3 target;
@@ -17,6 +19,8 @@ public class Missile : MonoBehaviour
         this.speed = speed;
         this.target = target;
         this.damage = damage;
+
+        gameLogic = transform.root.gameObject;
     }
 
 
@@ -49,8 +53,10 @@ public class Missile : MonoBehaviour
         target.Hit(this.damage);
 
         Transform collider = collision.gameObject.transform;
+        gameLogic.GetComponent<GameLogic>().missileList.Remove(this.gameObject);
         Destroy(this.gameObject);
         Instantiate((GameObject)Resources.Load("Prefabs/Explosion", typeof(GameObject)), transform.position, Quaternion.identity);
+        
         //Shake screen, change sprite, etc
     }
 }

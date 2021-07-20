@@ -13,7 +13,8 @@ public class GameData
 
 
     private JsonData jsonData = new JsonData();
-    private LevelData currLevel = new LevelData();
+    public LevelData currLevel = new LevelData();
+    public int currLevelIndex;
     private DifficultyData currDifficulty = new DifficultyData();
 
 
@@ -43,13 +44,14 @@ public class GameData
     public void SetCurrentLevel(int levelIndex)
     {
         currLevel = jsonData.levels[levelIndex];
+        currLevelIndex = levelIndex;
     }
 
-    public LevelData GetCurrentLevel()
+    public void SetNextLevel()
     {
-        return currLevel;
-    }
-    
+        currLevelIndex += 1;
+        currLevel = jsonData.levels[currLevelIndex];
+    }    
 
 }
 

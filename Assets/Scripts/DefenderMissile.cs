@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DefenderMissile : MonoBehaviour
 {
+    private GameObject gameLogic;
+
     private float blastRadius;
     private float blastSpeed;
     private float speed;
@@ -18,6 +20,8 @@ public class DefenderMissile : MonoBehaviour
         this.target = target;
         this.blastRadius = blastRadius;
         this.blastSpeed = blastSpeed;
+
+        gameLogic = transform.root.gameObject;
     }
 
     void Start()
@@ -41,6 +45,7 @@ public class DefenderMissile : MonoBehaviour
             {
                 if (collider.tag == "Missile")
                 {
+                    gameLogic.GetComponent<GameLogic>().missileList.Remove(collider.gameObject);
                     Destroy(collider.gameObject);
                     Instantiate((GameObject)Resources.Load("Prefabs/SmallExplosion", typeof(GameObject)), collider.transform.position, Quaternion.identity);
                 }
@@ -57,6 +62,7 @@ public class DefenderMissile : MonoBehaviour
     {
         Transform collider = collision.gameObject.transform;
         Instantiate((GameObject)Resources.Load("Prefabs/Explosion", typeof(GameObject)), transform.position, Quaternion.identity);
+        gameLogic.GetComponent<GameLogic>().missileList.Remove(collider.gameObject);
         Destroy(collider.gameObject);
         Destroy(this.gameObject);
         // var number = Instantiate((GameObject)Resources.Load("Prefabs/Number"), transform.position, Quaternion.identity);

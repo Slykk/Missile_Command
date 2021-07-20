@@ -8,13 +8,12 @@ public class GameLogic : MonoBehaviour
 {
     private List<Defender> defenderList;
     private List<Building> buildingList;
-    // private List<Missile> missileList;
+    public List<GameObject> missileList;
 
     public GameObject missilesParent;
     public GameObject defenderMissilesParent;
     private GameObject missile;
     private GameObject defenderMissile;
-    private LevelData currLevel;
     public float timer;
     private List<string> targetType;
     private Vector3 missileTarget;
@@ -23,24 +22,13 @@ public class GameLogic : MonoBehaviour
 
     void Awake()
     {
-        buildingList = new List<Building>(transform.GetComponentsInChildren<Building>());
-        defenderList = new List<Defender>(transform.GetComponentsInChildren<Defender>());
-
-        currLevel = new LevelData();
+        
     }
 
     void Start()
     {
-        //Default value - to be changed later in JSON
-        currLevel.waveTimer = 2f;
-        currLevel.missilesAmount = 10;
-
-
-        timer = currLevel.waveTimer;
-        missilesLeft = currLevel.missilesAmount;
-
-        currLevel = GameData.GetInstance().GetCurrentLevel();
-
+        CreateLevel();
+        Debug.LogWarning(GameData.GetInstance().currLevel.missilesAmount);
     }
 
     void Update()
@@ -53,25 +41,55 @@ public class GameLogic : MonoBehaviour
             FireDefenderMissile(mousePosition);
         }
         
-        //Debug.LogWarning(timer);
-        if (timer <= 0)
+        if (missilesLeft > 0)
         {
-            timer = currLevel.waveTimer;
-            int random = Random.Range(1, Mathf.FloorToInt(missilesLeft/3f)+1);
-            waveMissiles = random;
-            missilesLeft -= random;
-            for (int i = 0; i < waveMissiles; i++)
+            if (timer <= 0)
             {
-                CreateMissile();
+                timer = GameData.GetInstance().currLevel.waveTimer;
+                int random = Random.Range(1, Mathf.FloorToInt(missilesLeft/3f));
+                waveMissiles = random;
+                missilesLeft -= random;
+                for (int i = 0; i < waveMissiles; i++)
+                {
+                    CreateMissile();
+                }
             }
         }
-        if (missilesLeft == 0)
+        else if (missileList.Count == 0)
         {
-            //Debug.LogWarning("You have completed the level!");
+            // Load next level
+            GameData.GetInstance().SetNextLevel();
+            CreateLevel();
+            // Debug.LogWarning("You have completed the level!");
+            // Debug.LogWarning("list is " + missileList.Count);
         }
     }
 
-    void CreateMissile()
+    private void CreateLevel()
+    {
+        var layout = GameObject.FindGameObjectWithTag("Layout");
+        if (layout != null)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("Layout"));
+        }
+        // Getting data from GameData and setting layout
+        //currLevel = GameData.GetInstance().GetCurrentLevel();
+
+        timer = GameData.GetInstance().currLevel.waveTimer;
+        missilesLeft = GameData.GetInstance().currLevel.missilesAmount;
+
+        var currLayout =  Instantiate((GameObject)Resources.Load("Prefabs/" + GameData.GetInstance().currLevel.layoutName, typeof(GameObject)), Vector3.zero, Quaternion.identity);
+        currLayout.name = GameData.GetInstance().currLevel.layoutName;
+        currLayout.transform.SetParent(this.transform);
+
+        // Lists by the components in children of the instantiated layout parent
+        buildingList = new List<Building>(transform.Find(GameData.GetInstance().currLevel.layoutName).GetComponentsInChildren<Building>());
+        defenderList = new List<Defender>(transform.Find(GameData.GetInstance().currLevel.layoutName).GetComponentsInChildren<Defender>());
+        missileList = new List<GameObject>();
+    }
+    
+
+    private void CreateMissile()
     {
         // def : 3, bld : 2 - to be changed late with other balancing set by difficulty or level, etc
         int defChance = 3;
@@ -100,9 +118,10 @@ public class GameLogic : MonoBehaviour
         missile = Instantiate((GameObject)Resources.Load("Prefabs/Missile", typeof(GameObject)), new Vector3(Random.Range(-9,9), 11f, 0f), Quaternion.identity);
         missile.transform.SetParent(missilesParent.transform);
         missile.GetComponent<Missile>().Init(2f, target, 2);
+        missileList.Add(missile);
     }
 
-    void FireDefenderMissile(Vector3 target)
+    private void FireDefenderMissile(Vector3 target)
     {
         // example for instantiating a text prefab
         // var canvas = transform.Find("FloatingText");
@@ -134,7 +153,8 @@ public class GameLogic : MonoBehaviour
                 minDist = dist;
             }
         }
-
+        if (closestDefender == null)
+            return;
         closestDefender.ammo--;
         closestDefender.reloading = true;
         Vector3 spawnPosition = closestDefender.transform.position;

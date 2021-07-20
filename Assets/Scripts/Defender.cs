@@ -7,7 +7,6 @@ public class Defender : Structure
     private SpriteRenderer spriteRenderer;
     private string spriteName;
     public int ammo;
-    public string state;
     public bool operational;
     public bool reloading;
     private float timer;
@@ -17,6 +16,7 @@ public class Defender : Structure
     protected override void Awake()
     {
         base.Awake();
+        
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         spriteName = spriteRenderer.sprite.name;
 

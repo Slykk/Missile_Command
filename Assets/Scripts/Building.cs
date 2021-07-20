@@ -10,6 +10,7 @@ public class Building : Structure
     protected override void Awake()
     {
         base.Awake();
+        
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         spriteName = spriteRenderer.sprite.name;
     }
