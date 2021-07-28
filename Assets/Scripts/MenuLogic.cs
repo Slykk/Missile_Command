@@ -19,6 +19,8 @@ public class MenuLogic : MonoBehaviour
 
     void Start()
     {
+        PauseMenu.gameIsPaused = false;
+
         menuParent = transform.Find("Menu");
         levelParent = transform.Find("Canvas/Main Menu/Levels/Levels List");
         playButton = transform.Find("Canvas/Main Menu/Menu/Play").GetComponent<Button>();

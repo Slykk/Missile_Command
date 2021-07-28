@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 
 
@@ -19,6 +21,9 @@ public class GameLogic : MonoBehaviour
     private Vector3 missileTarget;
     private int missilesLeft;
     private int waveMissiles;
+    private Transform currLayout;
+    private GameObject levelCompleteWindow;
+    
 
     void Awake()
     {
@@ -27,6 +32,9 @@ public class GameLogic : MonoBehaviour
 
     void Start()
     {
+        levelCompleteWindow = transform.Find("Canvas/LevelCompleteWindow").gameObject;
+        levelCompleteWindow.SetActive(false);
+
         CreateLevel();
         Debug.LogWarning(GameData.GetInstance().currLevel.missilesAmount);
     }
@@ -37,8 +45,11 @@ public class GameLogic : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
-            FireDefenderMissile(mousePosition);
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
+                FireDefenderMissile(mousePosition);
+            }
         }
         
         if (missilesLeft > 0)
@@ -58,33 +69,43 @@ public class GameLogic : MonoBehaviour
         else if (missileList.Count == 0)
         {
             // Load next level
-            GameData.GetInstance().SetNextLevel();
-            CreateLevel();
-            // Debug.LogWarning("You have completed the level!");
-            // Debug.LogWarning("list is " + missileList.Count);
+            levelCompleteWindow.SetActive(true);
+            
+            //GameData.GetInstance().SetNextLevel();
+            //CreateLevel();
         }
+    }
+
+    public void LoadNextLevel()
+    {
+        GameData.GetInstance().SetNextLevel();
+        CreateLevel();
+        levelCompleteWindow.SetActive(false);
+    }
+
+    public void QuitLevel()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void CreateLevel()
     {
-        var layout = GameObject.FindGameObjectWithTag("Layout");
-        if (layout != null)
+        if (currLayout != null)
         {
-            Destroy(GameObject.FindGameObjectWithTag("Layout"));
+            Destroy(currLayout.gameObject);
         }
         // Getting data from GameData and setting layout
         //currLevel = GameData.GetInstance().GetCurrentLevel();
-
+        
         timer = GameData.GetInstance().currLevel.waveTimer;
         missilesLeft = GameData.GetInstance().currLevel.missilesAmount;
 
-        var currLayout =  Instantiate((GameObject)Resources.Load("Prefabs/" + GameData.GetInstance().currLevel.layoutName, typeof(GameObject)), Vector3.zero, Quaternion.identity);
+        currLayout = Instantiate(Resources.Load("Prefabs/" + GameData.GetInstance().currLevel.layoutName) as GameObject, this.transform).transform;
         currLayout.name = GameData.GetInstance().currLevel.layoutName;
-        currLayout.transform.SetParent(this.transform);
 
         // Lists by the components in children of the instantiated layout parent
-        buildingList = new List<Building>(transform.Find(GameData.GetInstance().currLevel.layoutName).GetComponentsInChildren<Building>());
-        defenderList = new List<Defender>(transform.Find(GameData.GetInstance().currLevel.layoutName).GetComponentsInChildren<Defender>());
+        buildingList = new List<Building>(currLayout.GetComponentsInChildren<Building>());
+        defenderList = new List<Defender>(currLayout.GetComponentsInChildren<Defender>());
         missileList = new List<GameObject>();
     }
     
