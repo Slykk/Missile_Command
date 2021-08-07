@@ -31,6 +31,6 @@ public class Structure : MonoBehaviour
 
     public virtual void Kill()
     {
-        //
+        this.gameObject.tag = "destroyed";
     }
 }

@@ -56,6 +56,7 @@ public class Defender : Structure
     public override void Kill()
     {
         base.Kill();
+        operational = false;
         spriteRenderer.sprite = (Sprite)Resources.Load("Images/" + spriteName + "_Destroyed", typeof(Sprite));
     }
 }

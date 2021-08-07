@@ -3,7 +3,7 @@
         {
             "layoutName": "layout_01",
             "waveTimer": 2,
-            "missilesAmount": 1
+            "missilesAmount": 10
         },
         {
             "layoutName": "layout_01",

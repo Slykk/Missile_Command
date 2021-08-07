@@ -11,6 +11,7 @@ public class Missile : MonoBehaviour
     private Vector3 target;
     private int damage;
     private float step;
+    public Vector3 direction;
 
     private SpriteRenderer spriteRenderer;
 
@@ -27,7 +28,7 @@ public class Missile : MonoBehaviour
     void Start()
     {
         // Direction calculations
-        Vector3 direction = this.target - transform.position;
+        direction = this.target - transform.position;
         direction.Normalize();
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.eulerAngles = Vector3.forward*angle;
