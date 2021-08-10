@@ -7,34 +7,59 @@ public class IronDomeMissile : MonoBehaviour
 {
     Sequence mySequence = DOTween.Sequence();
 
+    private GameObject gameLogic;
+
     private Vector3 hitPos;
     private Vector3 lastPos;
+
+    public float speed = 5f;
+    public float rotateSpeed = 200f;
+
+    private Rigidbody2D rb;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    // void Update()
+    // {
+    //     // update sprite angle according to movement direction
+    //     SetDirection(lastPos);
+    //     lastPos = transform.position;
+    // }
+
+    void FixedUpdate()
     {
-        // update sprite angle according to movement direction
-        SetDirection(lastPos);
-        lastPos = transform.position;
+        Vector2 direction = (Vector2)hitPos - rb.position;
 
+        direction.Normalize();
 
+        float rotateAmount = Vector3.Cross(direction, transform.up).z;
+
+        rb.angularVelocity = -rotateAmount * rotateSpeed;
+
+        rb.velocity = transform.up * speed;
     }
 
     public void Init(Vector3 hitPos)
     {
         this.hitPos = hitPos;
-
-        SetDirection(hitPos);
-
-        Vector3[] missileWayPoints = new[] {Vector3.zero , new Vector3 (-2, 2, 0), hitPos};
-
-        mySequence.Insert(0f, transform.DOPath(missileWayPoints, 2f, PathType.CatmullRom).SetEase(Ease.OutSine));
+        gameLogic = transform.root.gameObject;
     }
+
+    // public void Init(Vector3 hitPos)
+    // {
+    //     this.hitPos = hitPos;
+
+    //     SetDirection(hitPos);
+
+    //     Vector3[] missileWayPoints = new[] {Vector3.zero , new Vector3 (-2, 2, 0), hitPos};
+
+    //     mySequence.Insert(0f, transform.DOPath(missileWayPoints, 2f, PathType.CatmullRom, PathMode.Sidescroller2D).SetEase(Ease.OutSine));
+    // }
 
     private void SetDirection(Vector3 relativePosition)
     {
@@ -47,5 +72,17 @@ public class IronDomeMissile : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Debug.LogWarning("angle is: " + angle);
         transform.eulerAngles = Vector3.forward*angle;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.LogWarning("I HAVE COLLIDED!!!!!!");
+        Transform collider = collision.gameObject.transform;
+        Instantiate((GameObject)Resources.Load("Prefabs/Explosion", typeof(GameObject)), transform.position, Quaternion.identity);
+        gameLogic.GetComponent<GameLogic>().missileList.Remove(collider.gameObject);
+        Destroy(collider.gameObject);
+        Destroy(this.gameObject);
+        // var number = Instantiate((GameObject)Resources.Load("Prefabs/Number"), transform.position, Quaternion.identity);
+        // number.GetComponent<ScorePopup>().Init("8", Vector3.right*2);
     }
 }
