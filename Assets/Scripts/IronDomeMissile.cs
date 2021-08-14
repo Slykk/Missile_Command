@@ -12,54 +12,36 @@ public class IronDomeMissile : MonoBehaviour
     private Vector3 hitPos;
     private Vector3 lastPos;
 
-    public float speed = 5f;
-    public float rotateSpeed = 200f;
+    // public float speed = 5f;
+    // public float rotateSpeed = 200f;
 
-    private Rigidbody2D rb;
+    // private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        // rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    // void Update()
-    // {
-    //     // update sprite angle according to movement direction
-    //     SetDirection(lastPos);
-    //     lastPos = transform.position;
-    // }
-
-    void FixedUpdate()
+    void Update()
     {
-        Vector2 direction = (Vector2)hitPos - rb.position;
-
-        direction.Normalize();
-
-        float rotateAmount = Vector3.Cross(direction, transform.up).z;
-
-        rb.angularVelocity = -rotateAmount * rotateSpeed;
-
-        rb.velocity = transform.up * speed;
+        // update sprite angle according to movement direction
+        SetDirection(lastPos);
+        lastPos = transform.position;
     }
+
 
     public void Init(Vector3 hitPos)
     {
         this.hitPos = hitPos;
-        gameLogic = transform.root.gameObject;
+
+        SetDirection(hitPos);
+
+        Vector3[] missileWayPoints = new[] {Vector3.zero , new Vector3 (-2, 2, 0), hitPos};
+
+        mySequence.Insert(0f, transform.DOPath(missileWayPoints, 2f, PathType.CatmullRom, PathMode.Sidescroller2D).SetEase(Ease.OutSine));
     }
-
-    // public void Init(Vector3 hitPos)
-    // {
-    //     this.hitPos = hitPos;
-
-    //     SetDirection(hitPos);
-
-    //     Vector3[] missileWayPoints = new[] {Vector3.zero , new Vector3 (-2, 2, 0), hitPos};
-
-    //     mySequence.Insert(0f, transform.DOPath(missileWayPoints, 2f, PathType.CatmullRom, PathMode.Sidescroller2D).SetEase(Ease.OutSine));
-    // }
 
     private void SetDirection(Vector3 relativePosition)
     {
