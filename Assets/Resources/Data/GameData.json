@@ -1,57 +1,57 @@
 {
     "levels": [
         {
-            "layoutName": "layout_01",
+            "layoutName": "Layout_01",
             "waveTimer": 2,
             "missilesAmount": 10
         },
         {
-            "layoutName": "layout_01",
+            "layoutName": "Layout_01",
             "waveTimer": 2,
             "missilesAmount": 20
         },
         {
-            "layoutName": "layout_01",
+            "layoutName": "Layout_01",
             "waveTimer": 2,
             "missilesAmount": 25
         },
         {
-            "layoutName": "layout_02",
+            "layoutName": "Layout_02",
             "waveTimer": 2,
             "missilesAmount": 20
         },
         {
-            "layoutName": "layout_02",
+            "layoutName": "Layout_02",
             "waveTimer": 2,
             "missilesAmount": 30
         },
         {
-            "layoutName": "layout_02",
+            "layoutName": "Layout_02",
             "waveTimer": 2,
             "missilesAmount": 40
         },
         {
-            "layoutName": "layout_02",
+            "layoutName": "Layout_02",
             "waveTimer": 2,
             "missilesAmount": 50
         },
         {
-            "layoutName": "layout_03",
+            "layoutName": "Layout_03",
             "waveTimer": 1.5,
             "missilesAmount": 30
         },
         {
-            "layoutName": "layout_03",
+            "layoutName": "Layout_03",
             "waveTimer": 2,
             "missilesAmount": 50
         },
         {
-            "layoutName": "layout_03",
+            "layoutName": "Layout_03",
             "waveTimer": 1.5,
             "missilesAmount": 50
         },
         {
-            "layoutName": "layout_03",
+            "layoutName": "Layout_03",
             "waveTimer": 1,
             "missilesAmount": 50
         }

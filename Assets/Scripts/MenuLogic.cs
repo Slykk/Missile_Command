@@ -11,6 +11,10 @@ public class MenuLogic : MonoBehaviour
     private Transform levelParent;
     private Button playButton;
     private List<Button> levelList = new List<Button>();
+    private Transform crossFade;
+
+    public Animator transition;
+    public float transitionTime = 1f;
 
     void Awake()
     {
@@ -24,6 +28,7 @@ public class MenuLogic : MonoBehaviour
         menuParent = transform.Find("Menu");
         levelParent = transform.Find("Canvas/Main Menu/Levels/Levels List");
         playButton = transform.Find("Canvas/Main Menu/Menu/Play").GetComponent<Button>();
+        crossFade = transform.Find("Canvas/Crossfade");
 
         // JSON Data initialization - singleton
         GameData.GetInstance().Init();
@@ -60,11 +65,26 @@ public class MenuLogic : MonoBehaviour
         }
     }
 
+    
+
     public void LoadLevel(int levelIndex)
     {
         GameData.GetInstance().SetCurrentLevel(levelIndex);
+        crossFade.gameObject.SetActive(true);
+        // SceneManager.LoadScene("Game");
+        StartCoroutine(LoadLevelTransition());
+    }
+
+    IEnumerator LoadLevelTransition()
+    {
+        // Play Animation
+        transition.SetTrigger("Start");
+
+        // Wait
+        yield return new WaitForSeconds(transitionTime);
+
+        // Load Scene
         SceneManager.LoadScene("Game");
-        // TODO  -   load game scene
     }
 
     public void LevelSelection()

@@ -55,24 +55,24 @@ public class GameLogic : MonoBehaviour
                 // Return after testing
                 
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
-                //FireDefenderMissile(mousePosition);
+                FireDefenderMissile(mousePosition);
                 
 
-                //testing purposes code
-                //SHOOT IRON DOME STYLE BUNCHA ANTI MISSILE MISSILES
-                for(int i = 0; i < missileList.Count; i++)
-                {
-                    GameObject missile = missileList[i];
-                    if (missile.transform.position.y > 3.5f)
-                    {
-                        Transform tempMissile = Instantiate((GameObject)Resources.Load("Prefabs/IronDomeMissile", typeof(GameObject)), Vector3.zero, Quaternion.identity).transform;
-                        Vector3 hitPos = missile.transform.position + missile.GetComponent<Missile>().direction.normalized * 3;
-                        tempMissile.gameObject.GetComponent<IronDomeMissile>().Init(hitPos);
+                // testing purposes code
+                // SHOOT IRON DOME STYLE BUNCHA ANTI MISSILE MISSILES
+                // for(int i = 0; i < missileList.Count; i++)
+                // {
+                //     GameObject missile = missileList[i];
+                //     if (missile.transform.position.y > 3.5f)
+                //     {
+                //         Transform tempMissile = Instantiate((GameObject)Resources.Load("Prefabs/IronDomeMissile", typeof(GameObject)), Vector3.zero, Quaternion.identity).transform;
+                //         Vector3 hitPos = missile.transform.position + missile.GetComponent<Missile>().direction.normalized * 3;
+                //         tempMissile.gameObject.GetComponent<IronDomeMissile>().Init(hitPos);
 
-                        //mySequence.Insert(2f * i, tempMissile.DOMove(hitPos, 2f));
+                //         //mySequence.Insert(2f * i, tempMissile.DOMove(hitPos, 2f));
                         
-                    }
-                }
+                //     }
+                // }
 
             }
         }

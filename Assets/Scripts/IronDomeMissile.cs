@@ -11,6 +11,7 @@ public class IronDomeMissile : MonoBehaviour
 
     private Vector3 hitPos;
     private Vector3 lastPos;
+    private float timerScale;
 
     // public float speed = 5f;
     // public float rotateSpeed = 200f;
@@ -36,11 +37,14 @@ public class IronDomeMissile : MonoBehaviour
     {
         this.hitPos = hitPos;
 
+        timerScale = Vector3.Distance(hitPos, transform.position);
+        Debug.Log(timerScale);
+
         SetDirection(hitPos);
 
         Vector3[] missileWayPoints = new[] {Vector3.zero , new Vector3 (-2, 2, 0), hitPos};
 
-        mySequence.Insert(0f, transform.DOPath(missileWayPoints, 2f, PathType.CatmullRom, PathMode.Sidescroller2D).SetEase(Ease.OutSine));
+        mySequence.Insert(0f, transform.DOPath(missileWayPoints, timerScale / 2f, PathType.CatmullRom, PathMode.Sidescroller2D).SetEase(Ease.OutSine));
     }
 
     private void SetDirection(Vector3 relativePosition)
